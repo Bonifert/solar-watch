@@ -25,7 +25,7 @@ public class OpenWeatherService {
     OpenWeatherCoordinates[] response = restTemplate.getForObject(url, OpenWeatherCoordinates[].class);
     
     if (response != null && response.length > 0) {
-      logger.info("The answer from OpenWeather api: " + response[0]);
+      logger.info("The answer from OpenWeather api is: " + response[0]);
       return Optional.of(response[0]);
     }
     logger.error("We didn't get response from the OpenWeather server");

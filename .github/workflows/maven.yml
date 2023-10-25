@@ -50,6 +50,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: echo ${DOCKER_HUB_PASSWORD} | docker login --username "${DOCKER_HUB_USER}" --password-stdin
-      - run: docker build . solar-watch
+      - run: docker build . -t solar-watch
       - run: docker tag "${IMAGE_NAME}" "${DOCKER_HUB_NAMESPACE}/${IMAGE_NAME}:${LANGUAGE}${LANGUAGE_VERSION}-${VERSION}"
       - run: docker push "${DOCKER_HUB_NAMESPACE}/${IMAGE_NAME}:${LANGUAGE}${LANGUAGE_VERSION}-${VERSION}"

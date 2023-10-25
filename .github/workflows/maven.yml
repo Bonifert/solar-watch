@@ -42,13 +42,29 @@ jobs:
 
 
   publish:
+    name: Docker push
     runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: 'solar-watch'
-      LANGUAGE: 'java'
-      LANGUAGE_VERSION: 17
+
+    # Build needs to finish first
+    needs: build
+
+    # Only push images from the main branch
+    if: github.ref == 'refs/heads/master'
+
     steps:
-      - uses: actions/checkout@v2
-      - run: echo ${DOCKER_HUB_PASSWORD} | docker login --username "${DOCKER_HUB_USER}" --password-stdin
-      - run: docker tag "${IMAGE_NAME}" "${DOCKER_HUB_NAMESPACE}/${IMAGE_NAME}:${LANGUAGE}${LANGUAGE_VERSION}-${VERSION}"
-      - run: docker push "${DOCKER_HUB_NAMESPACE}/${IMAGE_NAME}:${LANGUAGE}${LANGUAGE_VERSION}-${VERSION}"
+      # Load and un-archive the Docker image
+      - name: Download Docker image
+        uses: actions/download-artifact@v2
+        with:
+          name: docker-image
+      - name: Load Docker image
+        run: docker load --input image.tar
+
+      # Log in to Docker Hub and push the image
+      - name: Publish Docker image
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_HUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        run: |
+          echo "${DOCKERHUB_PASS}" | docker login --username "${DOCKERHUB_USERNAME}" --password-stdin
+          docker push "${IMAGE_TAG}"

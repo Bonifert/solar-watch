@@ -14,6 +14,11 @@ on:
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
+env:
+  DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+  DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
+  DOCKER_HUB_NAMESPACE: ${{ secrets.DOCKER_HUB_NAMESPACE }}
+  VERSION: ${{ github.sha }}
 
 jobs:
   build:
@@ -34,3 +39,32 @@ jobs:
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+
+
+  publish:
+    name: Docker push
+    runs-on: ubuntu-latest
+
+    # Build needs to finish first
+    needs: build
+
+    # Only push images from the main branch
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      # Load and un-archive the Docker image
+      - name: Download Docker image
+        uses: actions/download-artifact@v2
+        with:
+          name: docker-image
+      - name: Load Docker image
+        run: docker load --input image.tar
+
+      # Log in to Docker Hub and push the image
+      - name: Publish Docker image
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_HUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        run: |
+          echo "${DOCKERHUB_PASS}" | docker login --username "${DOCKERHUB_USERNAME}" --password-stdin
+          docker push "${IMAGE_TAG}"

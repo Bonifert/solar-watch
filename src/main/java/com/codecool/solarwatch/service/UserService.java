@@ -5,7 +5,6 @@ import com.codecool.solarwatch.model.dto.CreateUserDTO;
 import com.codecool.solarwatch.model.entity.Role;
 import com.codecool.solarwatch.model.entity.UserEntity;
 import com.codecool.solarwatch.service.repository.UserRepository;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,13 +43,14 @@ public class UserService {
     throw new NotFoundException("User", id);
   }
 
-  public void addAdminTo(long id){
+  public void addAdminTo(long id) {
     Optional<UserEntity> user = userRepository.findById(id);
-    if (user.isPresent()){
+    if (user.isPresent()) {
       UserEntity presentUser = user.get();
       presentUser.setRole(Role.ROLE_ADMIN);
       userRepository.save(presentUser);
-    } else {
+    }
+    else {
       throw new NotFoundException("User", id);
     }
   }

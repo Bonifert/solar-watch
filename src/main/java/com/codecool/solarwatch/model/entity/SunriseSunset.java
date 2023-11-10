@@ -1,6 +1,5 @@
 package com.codecool.solarwatch.model.entity;
 
-import com.codecool.solarwatch.model.entity.City;
 import jakarta.persistence.*;
 import lombok.*;
 

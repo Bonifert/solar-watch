@@ -60,11 +60,6 @@ public class WebSecurityConfig {
     return authenticationProvider;
   }
 
-  @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration auth) throws Exception {
-    return auth.getAuthenticationManager();
-  }
-
   public AuthTokenFilter authenticationJwtTokenFilter() {
     return new AuthTokenFilter(jwtUtils, userDetailsService);
   }
@@ -72,5 +67,10 @@ public class WebSecurityConfig {
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration auth) throws Exception {
+    return auth.getAuthenticationManager();
   }
 }

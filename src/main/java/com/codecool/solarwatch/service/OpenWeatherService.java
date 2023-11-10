@@ -17,16 +17,16 @@ public class OpenWeatherService {
   private static final Logger logger = LoggerFactory.getLogger(OpenWeatherService.class);
   private final RestTemplate restTemplate;
   private final CityRepository cityRepository;
-  
+
   @Autowired
   public OpenWeatherService(RestTemplate restTemplate, CityRepository cityRepository) {
     this.restTemplate = restTemplate;
     this.cityRepository = cityRepository;
   }
-  
-  public City getCoordinates(String city){
+
+  public City getCoordinates(String city) {
     Optional<City> searchedCity = cityRepository.findCityByName(city);
-    if (searchedCity.isPresent()){
+    if (searchedCity.isPresent()) {
       System.out.println("El van mentve gecooo");
       return searchedCity.get();
     }

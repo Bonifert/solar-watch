@@ -14,15 +14,16 @@ import java.time.ZonedDateTime;
 @ControllerAdvice
 public class SolarWatchControllerAdvice {
   Logger logger = LoggerFactory.getLogger(SolarWatchControllerAdvice.class);
+
   @ExceptionHandler(value = NotSupportedCityException.class)
-  ResponseEntity<Object> handleNotSupportedCityException(NotSupportedCityException e){
+  ResponseEntity<Object> handleNotSupportedCityException(NotSupportedCityException e) {
     HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
     ApiException exception = new ApiException(e.getMessage(), httpStatus, ZonedDateTime.now(ZoneId.of("Z")));
     return new ResponseEntity<>(exception, httpStatus);
   }
 
   @ExceptionHandler(value = {NotFoundException.class, UsernameNotFoundException.class})
-  ResponseEntity<Object> handleNotFoundException(Exception e){
+  ResponseEntity<Object> handleNotFoundException(Exception e) {
     HttpStatus httpStatus = HttpStatus.NOT_FOUND;
     ApiException exception = new ApiException(e.getMessage(), httpStatus, ZonedDateTime.now(ZoneId.of("Z")));
     logger.error("Bazki ez baj");

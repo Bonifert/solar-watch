@@ -3,7 +3,6 @@ package com.codecool.solarwatch.controller;
 import com.codecool.solarwatch.model.dto.CreateUserDTO;
 import com.codecool.solarwatch.model.dto.JwtDTO;
 import com.codecool.solarwatch.model.dto.SignInDTO;
-import com.codecool.solarwatch.model.entity.Role;
 import com.codecool.solarwatch.model.entity.UserEntity;
 import com.codecool.solarwatch.security.jwt.JwtUtils;
 import com.codecool.solarwatch.service.UserService;
@@ -56,7 +55,7 @@ public class UserController {
   }
 
   @PostMapping("/admin/{userId}")
-  public ResponseEntity<Void> addAdminToUser(@PathVariable long userId){
+  public ResponseEntity<Void> addAdminToUser(@PathVariable long userId) {
     userService.addAdminTo(userId);
     return ResponseEntity.ok().build();
   }

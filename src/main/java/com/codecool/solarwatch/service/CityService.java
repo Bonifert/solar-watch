@@ -14,11 +14,11 @@ public class CityService {
     this.cityRepository = cityRepository;
   }
 
-  public List<City> getAllCity(){
+  public List<City> getAllCity() {
     return cityRepository.findAll();
   }
 
-  public void deleteById(long id){
+  public void deleteById(long id) {
     cityRepository.deleteById(id);
   }
 }

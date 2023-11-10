@@ -20,9 +20,9 @@ import java.util.Optional;
 public class SunriseSunsetService {
   private static final DateTimeFormatter FORMATTER_FOR_LOCALTIME = DateTimeFormatter.ofPattern("h:mm:ss a");
   private static final DateTimeFormatter FORMATTER_FOR_LOCALDATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+  private static final Logger logger = LoggerFactory.getLogger(SunriseSunsetService.class);
   private final RestTemplate restTemplate;
   private final SunriseSunsetRepository sunriseSunsetRepository;
-  private static final Logger logger = LoggerFactory.getLogger(SunriseSunsetService.class);
 
   @Autowired
   public SunriseSunsetService(RestTemplate restTemplate, SunriseSunsetRepository sunriseSunsetRepository) {

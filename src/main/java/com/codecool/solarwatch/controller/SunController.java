@@ -24,7 +24,7 @@ public class SunController {
   }
 
   @GetMapping("/getsunrisesunset")
-  public ResponseEntity<SunReport> getSunriseAndSunset(@RequestParam String city, @RequestParam LocalDate date){
+  public ResponseEntity<SunReport> getSunriseAndSunset(@RequestParam String city, @RequestParam LocalDate date) {
     City searchedCity = openWeatherService.getCoordinates(city);
     SunReport report = sunriseSunsetService.getSunriseAndSunset(searchedCity, date);
     return ResponseEntity.ok().body(report);

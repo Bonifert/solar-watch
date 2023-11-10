@@ -18,12 +18,12 @@ public class CityController {
   }
 
   @GetMapping("/all")
-  public ResponseEntity<List<City>> getAllCity(){
+  public ResponseEntity<List<City>> getAllCity() {
     return ResponseEntity.ok().body(cityService.getAllCity());
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteCityById(@PathVariable long id){
+  public ResponseEntity<Void> deleteCityById(@PathVariable long id) {
     cityService.deleteById(id);
     return ResponseEntity.status(HttpStatus.OK).build();
   }

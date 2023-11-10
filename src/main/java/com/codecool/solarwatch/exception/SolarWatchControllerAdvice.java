@@ -26,7 +26,6 @@ public class SolarWatchControllerAdvice {
   ResponseEntity<Object> handleNotFoundException(Exception e) {
     HttpStatus httpStatus = HttpStatus.NOT_FOUND;
     ApiException exception = new ApiException(e.getMessage(), httpStatus, ZonedDateTime.now(ZoneId.of("Z")));
-    logger.error("Bazki ez baj");
     return new ResponseEntity<>(exception, httpStatus);
   }
 
